@@ -1,4 +1,4 @@
-package classes;
+package classes.DTO;
 public class UnidadeSaude extends Geral {
 
 	private String nome;

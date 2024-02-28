@@ -1,4 +1,4 @@
-package classes;
+package classes.DTO;
 import java.time.LocalDate;
 
 public class Funcionario extends Cidadao {
@@ -6,8 +6,8 @@ public class Funcionario extends Cidadao {
 	private String senha;
 	private UnidadeSaude unidadeSaude;
 	
-	public Funcionario(int id, int numeroCNS, String nome, LocalDate dataNascimento, String cpf, String senha, UnidadeSaude unidadeSaude) {
-		super(id, numeroCNS, nome, dataNascimento, cpf);
+	public Funcionario(int numeroCNS, String nome, LocalDate dataNascimento, String cpf, String senha, UnidadeSaude unidadeSaude) {
+		super(numeroCNS, nome, dataNascimento, cpf);
 		setSenha(senha);
 		setUnidadeSaude(unidadeSaude);
 	}

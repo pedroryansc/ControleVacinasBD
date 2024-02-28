@@ -1,4 +1,4 @@
-package classes;
+package classes.DTO;
 public class Lote {
 	
 	private String codigo;

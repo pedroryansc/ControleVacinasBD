@@ -1,12 +1,12 @@
-package classes;
+package classes.DTO;
 import java.time.LocalDate;
 
 public class Administrador extends Cidadao {
 
 	private String senha;
 	
-	public Administrador(int id, int numeroCNS, String nome, LocalDate dataNascimento, String cpf, String senha) {
-		super(id, numeroCNS, nome, dataNascimento, cpf);
+	public Administrador(int numeroCNS, String nome, LocalDate dataNascimento, String cpf, String senha) {
+		super(numeroCNS, nome, dataNascimento, cpf);
 		setSenha(senha);
 	}
 	

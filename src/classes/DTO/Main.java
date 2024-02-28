@@ -1,11 +1,24 @@
-package classes;
+package classes.DTO;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+import classes.BO.CidadaoBO;
+
 public class Main {
 	public static void main(String[] args) {
+		
+		Cidadao cidadao = new Cidadao(2023004505);
+		
+		CidadaoBO cidBO = new CidadaoBO();
+		
+		cidadao = cidBO.procurarId(cidadao);
+		
+		System.out.println(cidadao);
+		System.out.println("Olá, mundo!");
+		
+		/*
 		Scanner entrada = new Scanner(System.in);
 		
 		// Cria��o do Administrador
@@ -612,5 +625,7 @@ public class Main {
 		System.out.print("\nFim do sistema");
 		
 		entrada.close();
+		
+		*/
 	}
 }

@@ -1,4 +1,4 @@
-package classes;
+package classes.DTO;
 
 public class Geral { // Será utilizado para a injeção de dependência em outra classe, pois todas as outras classes fazem parte de Geral
 

@@ -1,4 +1,4 @@
-package classes;
+package classes.DTO;
 import java.time.LocalDate;
 
 public class RegistroVacina extends Geral {

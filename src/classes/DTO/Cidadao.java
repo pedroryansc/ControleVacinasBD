@@ -1,15 +1,22 @@
-package classes;
+package classes.DTO;
 import java.time.LocalDate;
 
-public class Cidadao extends Geral {
+public class Cidadao {
 
 	private int numeroCNS;
 	private String nome;
 	private LocalDate dataNascimento;
 	private String cpf;
 	
-	public Cidadao(int id, int numeroCNS, String nome, LocalDate dataNascimento, String cpf) {
-		super(id);
+	public Cidadao() {
+		
+	}
+	
+	public Cidadao(int numeroCNS) {
+		setNumeroCNS(numeroCNS);
+	}
+	
+	public Cidadao(int numeroCNS, String nome, LocalDate dataNascimento, String cpf) {
 		setNumeroCNS(numeroCNS);
 		setNome(nome);
 		setDataNascimento(dataNascimento);
