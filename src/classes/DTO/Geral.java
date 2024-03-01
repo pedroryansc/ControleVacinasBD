@@ -4,6 +4,10 @@ public class Geral { // Será utilizado para a injeção de dependência em outr
 
 	private int id;
 
+	public Geral() {
+		
+	}
+	
 	public Geral(int id) {
 		setId(id);
 	}

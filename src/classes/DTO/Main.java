@@ -9,58 +9,9 @@ import classes.BO.CidadaoBO;
 public class Main {
 	public static void main(String[] args) {
 		
-		Cidadao cidadao = new Cidadao(2023004505);
-		
-		CidadaoBO cidBO = new CidadaoBO();
-		
-		cidadao = cidBO.procurarId(cidadao);
-		
-		System.out.println(cidadao);
-		System.out.println("Olá, mundo!");
-		
-		/*
 		Scanner entrada = new Scanner(System.in);
 		
-		// Cria��o do Administrador
-		
-		LocalDate data = LocalDate.parse("1978-04-24");
-		Administrador admin1 = new Administrador(2023261023, "Igor Kammer Grahl", data, "180.719.870-00", "12345");
-		Cidadao cid1 = new Cidadao(2023261023, "Igor Kammer Grahl", data, "180.719.870-00");
-		
-		ArrayList<Administrador> admins = new ArrayList<Administrador>();
-		admins.add(admin1);
-		
-		// Cria��o da Unidade de Sa�de
-		
-		UnidadeSaude usItuporanga = new UnidadeSaude("Unidade Sanit�ria Centro", "Rua Em�lio Altemburg", "Centro", "Ituporanga", "Santa Catarina", "(47) 3533-3176");
-		
-		ArrayList<UnidadeSaude> unidades = new ArrayList<UnidadeSaude>();
-		unidades.add(usItuporanga);
-		
-		// Cria��o dos Funcion�rios
-		
-		data = LocalDate.parse("1953-09-13");
-		Funcionario func1 = new Funcionario(2009210109, "Irina", data, "050.120.050-00", "534", usItuporanga);
-		Cidadao cid2 = new Cidadao(2009210109, "Irina", data, "050.120.050-00");
-		
-		data = LocalDate.parse("2005-02-14");
-		Funcionario func2 = new Funcionario(19770525, "Rodrigo Curv�llo", data, "400.289.220-00", "1234", usItuporanga);
-		Cidadao cid3 = new Cidadao(19770525, "Rodrigo Curv�llo", data, "400.289.220-00");
-		
-		ArrayList<Funcionario> funcs = new ArrayList<Funcionario>();
-		funcs.add(func1);
-		funcs.add(func2);
-		
-		// Cria��o do Cidad�o
-		
-		data = LocalDate.parse("2005-01-05");
-		Cidadao cid4 = new Cidadao(2023004505, "Pedro Ryan Coelho Iplinski", data, "123.456.789-10");
-		
-		ArrayList<Cidadao> cidadaos = new ArrayList<Cidadao>();
-		cidadaos.add(cid1);
-		cidadaos.add(cid2);
-		cidadaos.add(cid3);
-		cidadaos.add(cid4);
+		/*
 		
 		Lote lote1 = new Lote("210200", "Contra Gripe", "Butantan", usItuporanga);
 		Lote lote2 = new Lote("FN9509", "Contra Covid-19", "Pfizer", usItuporanga);
@@ -78,6 +29,8 @@ public class Main {
 		ArrayList<RegistroVacina> registros = new ArrayList<RegistroVacina>();
 		registros.add(registro1);
 		registros.add(registro2);
+		
+		*/
 		
 		// Tela inicial
 		
@@ -115,6 +68,9 @@ public class Main {
 					
 					if(resp > 0) {
 					
+						Cidadao cidadao = null;
+						Funcionario func = null;
+						
 						int numeroCNS;
 						String senha;
 						int usuario = 0;
@@ -132,13 +88,14 @@ public class Main {
 							while(condicao) {
 								System.out.println("N�mero de sua Carteira Nacional de Sa�de: ");
 								numeroCNS = entrada.nextInt();
-								for(int i = 0; i < cidadaos.size(); i++) {
-									if(cidadaos.get(i).getNumeroCNS() == numeroCNS) {
-										condicao = false;
-										usuario = i;
-									}
-								}
-								if(condicao)
+								
+								cidadao = new Cidadao(numeroCNS);
+								CidadaoBO cidBO = new CidadaoBO();
+								cidadao = cidBO.procurarId(cidadao);
+								
+								if(cidadao != null)
+									condicao = false;
+								else
 									System.out.println("\nErro: N�mero de CNS inexistente. Por favor, insira novamente\n");
 							}
 							
@@ -146,7 +103,7 @@ public class Main {
 							
 							// Menu do cidad�o
 							
-							System.out.println("Bem-vindo(a), " + cidadaos.get(usuario).getNome());
+							System.out.println("Bem-vindo(a), " + cidadao.getNome());
 							
 							condicao = true;
 							
@@ -161,6 +118,8 @@ public class Main {
 								} while(resp < 0 || resp > 1);
 								
 								// Consulta de vacinas do cidad�o
+								
+								/*
 								
 								if(resp == 1) {
 									
@@ -615,6 +574,7 @@ public class Main {
 									
 								} else
 									condicao = false;
+								*/
 							}
 						}
 					}
@@ -625,7 +585,5 @@ public class Main {
 		System.out.print("\nFim do sistema");
 		
 		entrada.close();
-		
-		*/
 	}
 }

@@ -10,7 +10,7 @@ public class Conexao {
 	public static Connection conectar() {
 		try {
 			String url = "jdbc:mysql://localhost/" + NOME_DO_BANCO;
-			return DriverManager.getConnection(url, "root", "");
+			return DriverManager.getConnection(url, "root", "Sobaoeim123#");
 		} catch(Exception e) {
 			System.out.println("Erro: " + e.toString());
 			e.printStackTrace();

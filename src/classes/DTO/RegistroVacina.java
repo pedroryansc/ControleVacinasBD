@@ -10,6 +10,10 @@ public class RegistroVacina extends Geral {
 	private int dose = 0;
 	private UnidadeSaude unidadeSaude;
 	
+	public RegistroVacina() {
+		
+	}
+	
 	public RegistroVacina(int id, LocalDate data, Lote lote, Cidadao cidadao, Funcionario vacinador, int dose, UnidadeSaude unidadeSaude) {
 		super(id);
 		setData(data);
