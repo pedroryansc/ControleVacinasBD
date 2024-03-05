@@ -6,6 +6,14 @@ public class Lote {
 	private String laboratorio;
 	private UnidadeSaude unidadeSaude;
 	
+	public Lote() {
+		
+	}
+	
+	public Lote(UnidadeSaude unidadeSaude) {
+		setUnidadeSaude(unidadeSaude);
+	}
+	
 	public Lote(String codigo, String nomeVacina, String laboratorio, UnidadeSaude unidadeSaude) {
 		setCodigo(codigo);
 		setNomeVacina(nomeVacina);

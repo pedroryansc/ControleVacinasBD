@@ -8,6 +8,14 @@ public class UnidadeSaude extends Geral {
 	private String estado;
 	private String telefone;
 	
+	public UnidadeSaude() {
+		
+	}
+	
+	public UnidadeSaude(int id) {
+		super(id);
+	}
+	
 	public UnidadeSaude(int id, String nome, String rua, String bairro, String cidade, String estado, String telefone) {
 		super(id);
 		setNome(nome);

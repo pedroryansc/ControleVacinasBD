@@ -2,9 +2,13 @@ package classes.DTO;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 import classes.BO.CidadaoBO;
+import classes.BO.FuncionarioBO;
+import classes.BO.LoteBO;
+import classes.BO.RegistroVacinaBO;
 
 public class Main {
 	public static void main(String[] args) {
@@ -119,9 +123,9 @@ public class Main {
 								
 								// Consulta de vacinas do cidad�o
 								
-								/*
-								
 								if(resp == 1) {
+									
+									/*
 									
 									System.out.println("\nMinhas Vacinas:");
 									
@@ -142,6 +146,8 @@ public class Main {
 										System.out.println("\nNenhum registro de vacina encontrado. \n");
 									
 									cont = 0;
+									
+									*/
 								} else
 									condicao = false;
 							}
@@ -161,13 +167,13 @@ public class Main {
 								System.out.println("Senha: ");
 								senha = entrada.nextLine();
 								
-								for(int i = 0; i < funcs.size(); i++) {
-									if(funcs.get(i).getNumeroCNS() == numeroCNS && funcs.get(i).getSenha().equals(senha)) {
-										condicao = false;
-										usuario = i;
-									}
-								}
-								if(condicao)
+								func = new Funcionario(numeroCNS, senha);
+								FuncionarioBO funcBO = new FuncionarioBO();
+								func = funcBO.procurarId(func);
+								
+								if(func != null)
+									condicao = false;
+								else
 									System.out.println("\nErro: N�mero de CNS e/ou senha inv�lida\n");
 							}
 							
@@ -175,7 +181,7 @@ public class Main {
 							
 							// Menu do funcion�rio
 							
-							System.out.println("Bem-vindo(a), " + funcs.get(usuario).getNome());
+							System.out.println("Bem-vindo(a), " + func.getNome());
 							
 							condicao = true;
 							
@@ -197,6 +203,8 @@ public class Main {
 								} while(resp < 0 || resp > 5);
 								
 								if(resp == 1) {
+									
+									/*
 									
 									// Consulta de vacinas do funcion�rio
 									
@@ -277,14 +285,24 @@ public class Main {
 									
 									if(resp == 0)
 										condicao = false;
+										
+									*/
 								} else if(resp == 3) {
 									
+									Lote lote = new Lote(func.getUnidadeSaude());
+									LoteBO loteBO = new LoteBO();
+									
+									List<Lote> lotes = new ArrayList<Lote>();
+									lotes = loteBO.procurarTodosPorIdUS(lote);
+									
+									/*
 									for(int i = 0; i < lotes.size(); i++) {
 										if(funcs.get(usuario).getUnidadeSaude().getTelefone() == lotes.get(i).getUnidadeSaude().getTelefone())
 											cont++;
 									}
+									*/
 									
-									if(cont > 0) {
+									if(lotes != null) {
 										
 										// Cadastro de registro de vacina
 										
@@ -329,46 +347,50 @@ public class Main {
 										
 										condicao1 = true;
 										
-										int lote;
+										int loteCodigo;
 										
 										do {
 											System.out.println("\nLote:");
 											for(int i = 0; i < lotes.size(); i++) {
-												if(funcs.get(usuario).getUnidadeSaude().getTelefone() == lotes.get(i).getUnidadeSaude().getTelefone())
 													System.out.println("(" + (i + 1) + ") " + lotes.get(i).getNomeVacina() + " (" + lotes.get(i).getCodigo() + ")");
 											}
-											lote = entrada.nextInt();
-											if(lote < 1 || lote > lotes.size())
+											loteCodigo = entrada.nextInt();
+											if(loteCodigo < 1 || loteCodigo > lotes.size())
 												System.out.println("\nErro: Op��o inv�lida");
-										} while(lote < 1 || lote > lotes.size());
+										} while(loteCodigo < 1 || loteCodigo > lotes.size());
 										
-										lote--;
+										loteCodigo--;
 										
-										int cidadao = 0;
+										cidadao = null;
 										
-										while(condicao1) {
+										while(cidadao == null) {
 											System.out.println("\nN�mero da Carteira Nacional de Sa�de do Cidad�o:");
 											numeroCNS = entrada.nextInt();
-											for(int i = 0; i < cidadaos.size(); i++) {
-												if(cidadaos.get(i).getNumeroCNS() == numeroCNS) {
-													condicao1 = false;
-													cidadao = i;
-												}
-											}
-											if(condicao1)
+											
+											cidadao = new Cidadao(numeroCNS);
+											CidadaoBO cidBO = new CidadaoBO();
+											cidadao = cidBO.procurarId(cidadao);
+											
+											if(cidadao == null)
 												System.out.println("\nErro: N�mero de CNS inexistente. Por favor, insira novamente");
 										}
+										
+										Funcionario vac = new Funcionario(func.getUnidadeSaude());
+										FuncionarioBO vacBO = new FuncionarioBO();
+										
+										List<Funcionario> vacinadores = new ArrayList<Funcionario>();
+										vacinadores = vacBO.procurarTodosPorIdUS(vac);
 										
 										int vacinador;
 										
 										do {
 											System.out.println("\nVacinador(a):");
-											for(int i = 0; i < funcs.size(); i++)
-												System.out.println("(" + (i + 1) + ") " + funcs.get(i).getNome());
+											for(int i = 0; i < vacinadores.size(); i++)
+												System.out.println("(" + (i + 1) + ") " + vacinadores.get(i).getNome());
 											vacinador = entrada.nextInt();
-											if(vacinador < 1 || vacinador > funcs.size())
+											if(vacinador < 1 || vacinador > vacinadores.size())
 												System.out.println("\nErro: Op��o inv�lida");
-										} while(vacinador < 1 || vacinador > funcs.size());
+										} while(vacinador < 1 || vacinador > vacinadores.size());
 										
 										vacinador--;
 										
@@ -381,14 +403,17 @@ public class Main {
 												System.out.println("\nErro: Valor inv�lido");
 										} while(dose < 0);
 										
-										data = LocalDate.parse(dataVetor[2] + "-" + dataVetor[1] + "-" + dataVetor[0]);
-										RegistroVacina registro = new RegistroVacina(data, lotes.get(lote), cidadaos.get(cidadao), funcs.get(vacinador), dose, funcs.get(usuario).getUnidadeSaude());
-										registros.add(registro);
+										LocalDate data = LocalDate.parse(dataVetor[2] + "-" + dataVetor[1] + "-" + dataVetor[0]);
+										RegistroVacina registro = new RegistroVacina(0, data, lotes.get(loteCodigo), cidadao, vacinadores.get(vacinador), dose, func.getUnidadeSaude());
+										RegistroVacinaBO registroBO = new RegistroVacinaBO();
 										
-										System.out.println("\nCadastro realizado com sucesso!\n");
+										if(registroBO.inserir(registro))
+											System.out.println("\nCadastro realizado com sucesso!");
+										else
+											System.out.println("\nErro ao inserir.");
 										
 										do {
-											System.out.println("O que voc� quer fazer?");
+											System.out.println("\nO que voc� quer fazer?");
 											System.out.println("(1) Voltar \n(0) Sair (Desconectar)");
 											resp = entrada.nextInt();
 											if(resp < 0 || resp > 1)
@@ -402,7 +427,7 @@ public class Main {
 										System.out.print("\nNenhum lote foi encontrado. Primeiro, cadastre um lote de vacina \n");
 								
 								} else if(resp == 4) {
-									
+									/*
 									// Consulta de lotes
 									
 									System.out.println("\nLotes de Vacina de " + funcs.get(usuario).getUnidadeSaude().getNome());
@@ -425,7 +450,7 @@ public class Main {
 									
 									if(resp == 0)
 										condicao = false;
-								
+								*/
 								} else if(resp == 5) {
 									
 									// Cadastro de lote
@@ -434,7 +459,7 @@ public class Main {
 									
 									entrada.nextLine();
 									
-									System.out.println("C�digo:");
+									System.out.println("Código:");
 									String codigo = entrada.nextLine();
 									
 									System.out.println("\nVacina:");
@@ -443,10 +468,15 @@ public class Main {
 									System.out.println("\nLaborat�rio:");
 									String laboratorio = entrada.nextLine();
 									
-									Lote lote = new Lote(codigo, vacina, laboratorio, funcs.get(usuario).getUnidadeSaude());
-									lotes.add(lote);
+									Lote lote = new Lote(codigo, vacina, laboratorio, func.getUnidadeSaude());
+									LoteBO loteBO = new LoteBO();
 									
-									System.out.println("\nCadastro realizado com sucesso!");
+									if(loteBO.inserir(lote))
+										System.out.println("\nCadastro realizado com sucesso!");
+									else
+										System.out.println("\nErro ao inserir.");
+									
+									// Implementar mais acima
 									
 									do {
 										System.out.println("\nO que voc� quer fazer?");
@@ -462,6 +492,7 @@ public class Main {
 								} else
 									condicao = false;
 							}
+							/*
 						} else {
 							
 							// Login como administrador
@@ -574,8 +605,8 @@ public class Main {
 									
 								} else
 									condicao = false;
-								*/
 							}
+						*/
 						}
 					}
 				}

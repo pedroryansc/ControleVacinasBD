@@ -6,6 +6,19 @@ public class Funcionario extends Cidadao {
 	private String senha;
 	private UnidadeSaude unidadeSaude;
 	
+	public Funcionario() {
+		
+	}
+	
+	public Funcionario(UnidadeSaude unidadeSaude) {
+		setUnidadeSaude(unidadeSaude);
+	}
+	
+	public Funcionario(int numeroCNS, String senha) {
+		setNumeroCNS(numeroCNS);
+		setSenha(senha);
+	}
+	
 	public Funcionario(int numeroCNS, String nome, LocalDate dataNascimento, String cpf, String senha, UnidadeSaude unidadeSaude) {
 		super(numeroCNS, nome, dataNascimento, cpf);
 		setSenha(senha);
