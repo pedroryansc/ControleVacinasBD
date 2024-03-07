@@ -5,10 +5,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+import classes.BO.AdministradorBO;
 import classes.BO.CidadaoBO;
 import classes.BO.FuncionarioBO;
 import classes.BO.LoteBO;
 import classes.BO.RegistroVacinaBO;
+import classes.BO.UnidadeSaudeBO;
 
 public class Main {
 	public static void main(String[] args) {
@@ -74,13 +76,11 @@ public class Main {
 					
 						Cidadao cidadao = null;
 						Funcionario func = null;
+						Administrador admin = null;
 						
 						int numeroCNS;
 						String senha;
-						int usuario = 0;
-						int cont = 0;
 						boolean condicao = true;
-						int cidad = 0;
 						boolean condicao1 = true;
 						
 						if(resp == 1) {
@@ -276,8 +276,6 @@ public class Main {
 									} else
 										System.out.println("\nNenhum registro de vacina encontrado.");
 									
-									cont = 0;
-									
 									do {
 										System.out.println("\nO que voc� quer fazer?");
 										System.out.println("(1) Voltar \n(0) Sair (Desconectar)");
@@ -299,8 +297,6 @@ public class Main {
 									if(!(lotes.isEmpty())) {
 										
 										// Cadastro de registro de vacina
-										
-										cont = 0;
 										
 										String[] dataVetor = new String[3];
 										
@@ -475,8 +471,6 @@ public class Main {
 									else
 										System.out.println("\nErro ao inserir.");
 									
-									// Implementar mais acima
-									
 									do {
 										System.out.println("\nO que voc� quer fazer?");
 										System.out.println("(1) Voltar \n(0) Sair (Desconectar)");
@@ -491,7 +485,6 @@ public class Main {
 								} else
 									condicao = false;
 							}
-							/*
 						} else {
 							
 							// Login como administrador
@@ -507,13 +500,13 @@ public class Main {
 								System.out.println("Senha: ");
 								senha = entrada.nextLine();
 								
-								for(int i = 0; i < admins.size(); i++) {
-									if(admins.get(i).getNumeroCNS() == numeroCNS && admins.get(i).getSenha().equals(senha)) {
-										condicao = false;
-										usuario = i;
-									}
-								}
-								if(condicao)
+								admin = new Administrador(numeroCNS, senha);
+								AdministradorBO adminBO = new AdministradorBO();
+								admin = adminBO.procurarIdSenha(admin);
+								
+								if(admin != null)
+									condicao = false;
+								else
 									System.out.println("\nErro: N�mero de CNS e/ou senha inv�lida\n");
 							}
 							
@@ -521,7 +514,7 @@ public class Main {
 							
 							// Menu do administrador
 							
-							System.out.println("Bem-vindo(a), " + admins.get(usuario).getNome());
+							System.out.println("Bem-vindo(a), " + admin.getNome());
 							
 							condicao = true;
 							
@@ -541,11 +534,15 @@ public class Main {
 									
 									// Consulta de Unidades de Sa�de
 									
+									UnidadeSaudeBO usBO = new UnidadeSaudeBO();
+									List<UnidadeSaude> unidades = new ArrayList<UnidadeSaude>();
+									unidades = usBO.procurarTodas();
+									
 									System.out.println("\nUnidades de Sa�de");
 									
 									for(int i = 0; i < unidades.size(); i++) {
 										System.out.println("\nNome: " + unidades.get(i).getNome());
-										System.out.println("Endere�o: " + unidades.get(i).getRua() + ", " + unidades.get(i).getBairro() + " - " + unidades.get(i).getCidade() + " (" + unidades.get(i).getEstado() + ")");
+										System.out.println("Endereço: " + unidades.get(i).getRua() + ", " + unidades.get(i).getBairro() + " - " + unidades.get(i).getCidade() + " (" + unidades.get(i).getEstado() + ")");
 										System.out.println("Telefone: " + unidades.get(i).getTelefone());
 									}
 									
@@ -586,10 +583,13 @@ public class Main {
 									System.out.println("\nTelefone:");
 									String telefone = entrada.nextLine();
 									
-									UnidadeSaude us = new UnidadeSaude(nomeUnidade, rua, bairro, cidade, estado, telefone);
-									unidades.add(us);
+									UnidadeSaude us = new UnidadeSaude(0, nomeUnidade, rua, bairro, cidade, estado, telefone);
+									UnidadeSaudeBO usBO = new UnidadeSaudeBO();
 									
-									System.out.println("\nCadastro realizado com sucesso!");
+									if(usBO.inserir(us))
+										System.out.println("\nCadastro realizado com sucesso!");
+									else
+										System.out.println("\nErro ao inserir.");
 									
 									do {
 										System.out.println("\nO que voc� quer fazer?");
@@ -601,11 +601,9 @@ public class Main {
 									
 									if(resp == 0)
 										condicao = false;
-									
 								} else
 									condicao = false;
 							}
-						*/
 						}
 					}
 				}

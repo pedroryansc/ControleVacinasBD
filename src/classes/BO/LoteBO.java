@@ -2,8 +2,6 @@ package classes.BO;
 
 import classes.DTO.Lote;
 import classes.DAO.LoteDAO;
-
-import java.util.ArrayList;
 import java.util.List;
 
 public class LoteBO {

@@ -5,6 +5,15 @@ public class Administrador extends Cidadao {
 
 	private String senha;
 	
+	public Administrador() {
+		
+	}
+	
+	public Administrador(int numeroCNS, String senha) {
+		setNumeroCNS(numeroCNS);
+		setSenha(senha);
+	}
+	
 	public Administrador(int numeroCNS, String nome, LocalDate dataNascimento, String cpf, String senha) {
 		super(numeroCNS, nome, dataNascimento, cpf);
 		setSenha(senha);
