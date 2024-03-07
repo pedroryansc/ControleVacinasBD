@@ -12,6 +12,11 @@ public class FuncionarioBO {
 		return funcDAO.procurarId(func);
 	}
 	
+	public Funcionario procurarIdSenha(Funcionario func) {
+		FuncionarioDAO funcDAO = new FuncionarioDAO();
+		return funcDAO.procurarIdSenha(func);
+	}
+	
 	public List<Funcionario> procurarTodosPorIdUS(Funcionario func){
         FuncionarioDAO funcDAO = new FuncionarioDAO();
         return funcDAO.procurarTodosPorIdUS(func);

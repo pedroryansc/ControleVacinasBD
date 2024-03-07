@@ -1,6 +1,15 @@
 package classes.DAO;
 
+import classes.BO.CidadaoBO;
+import classes.BO.FuncionarioBO;
+import classes.BO.LoteBO;
+import classes.BO.UnidadeSaudeBO;
+import classes.DTO.Cidadao;
+import classes.DTO.Funcionario;
+import classes.DTO.Lote;
 import classes.DTO.RegistroVacina;
+import classes.DTO.UnidadeSaude;
+
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
@@ -35,11 +44,12 @@ public class RegistroVacinaDAO {
         }
     }
 	
-	public List<RegistroVacina> pesquisarTodosPorId() {
+	public List<RegistroVacina> procurarTodosPorId(RegistroVacina registro) {
         try {
         	Connection conn = Conexao.conectar();
             String sql = "SELECT * FROM " + NOMEDATABELA + " WHERE NUMEROCNS_CID = ?;";
             PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setInt(1, registro.getCidadao().getNumeroCNS());
             ResultSet rs = ps.executeQuery();
             List<RegistroVacina> listObj = montarLista(rs);
             return listObj;
@@ -56,11 +66,31 @@ public class RegistroVacinaDAO {
                 RegistroVacina obj = new RegistroVacina();
                 obj.setId(rs.getInt(1));
                 obj.setData(rs.getDate(2).toLocalDate());
-                obj.setLote(null);
-                obj.setCidadao(null);
-                obj.setVacinador(null);
+                
+                Lote lote = new Lote(rs.getString(3));
+                LoteBO loteBO = new LoteBO();
+                lote = loteBO.procurarId(lote);
+                
+                obj.setLote(lote);
+                
+                Cidadao cidadao = new Cidadao(rs.getInt(4));
+                CidadaoBO cidadaoBO = new CidadaoBO();
+                cidadao = cidadaoBO.procurarId(cidadao);
+                
+                obj.setCidadao(cidadao);
+                
+                Funcionario func = new Funcionario(rs.getInt(5));
+                FuncionarioBO funcBO = new FuncionarioBO();
+                func = funcBO.procurarId(func);
+                
+                obj.setVacinador(func);
                 obj.setDose(rs.getInt(6));
-                obj.setUnidadeSaude(null);
+                
+                UnidadeSaude us = new UnidadeSaude(rs.getInt(7));
+				UnidadeSaudeBO usBO = new UnidadeSaudeBO();
+				us = usBO.procurarId(us);
+                
+                obj.setUnidadeSaude(us);
                 listObj.add(obj);
             }
             return listObj;

@@ -10,6 +10,10 @@ public class Lote {
 		
 	}
 	
+	public Lote(String codigo) {
+		setCodigo(codigo);
+	}
+	
 	public Lote(UnidadeSaude unidadeSaude) {
 		setUnidadeSaude(unidadeSaude);
 	}

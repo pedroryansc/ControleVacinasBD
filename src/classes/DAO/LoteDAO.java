@@ -54,6 +54,40 @@ public class LoteDAO {
         return false;
     }
 	
+	public Lote procurarId(Lote lote) {
+		try {
+			Connection conn = Conexao.conectar();
+			String sql = "SELECT * FROM " + NOMEDATABELA + " WHERE LOTE_CODIGO = ?;";
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ps.setString(1, lote.getCodigo());
+			ResultSet rs = ps.executeQuery();
+			if(rs.next()) {
+				Lote obj = new Lote();
+				obj.setCodigo(rs.getString(1));
+				obj.setNomeVacina(rs.getString(2));
+				obj.setLaboratorio(rs.getString(3));
+				
+				UnidadeSaude us = new UnidadeSaude(rs.getInt(4));
+				UnidadeSaudeBO usBO = new UnidadeSaudeBO();
+				us = usBO.procurarId(us);
+				
+				obj.setUnidadeSaude(us);
+				ps.close();
+				rs.close();
+				conn.close();
+				return obj;
+			} else {
+				ps.close();
+				rs.close();
+				conn.close();
+				return null;
+			}
+		} catch(Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+	
 	public List<Lote> procurarTodosPorIdUS(Lote lote) {
         try {
         	Connection conn = Conexao.conectar();

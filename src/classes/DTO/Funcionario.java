@@ -10,6 +10,10 @@ public class Funcionario extends Cidadao {
 		
 	}
 	
+	public Funcionario(int numeroCNS) {
+		setNumeroCNS(numeroCNS);
+	}
+	
 	public Funcionario(UnidadeSaude unidadeSaude) {
 		setUnidadeSaude(unidadeSaude);
 	}

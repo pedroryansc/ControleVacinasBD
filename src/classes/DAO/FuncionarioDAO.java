@@ -18,6 +18,42 @@ public class FuncionarioDAO {
 	public Funcionario procurarId(Funcionario func) {
 		try {
 			Connection conn = Conexao.conectar();
+			String sql = "SELECT * FROM " + NOMEDATABELA + " WHERE NUMEROCNS_FUN = ?";
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ps.setInt(1, func.getNumeroCNS());
+			ResultSet rs = ps.executeQuery();
+			if(rs.next()) {
+				Funcionario obj = new Funcionario();
+				obj.setNumeroCNS(rs.getInt(1));
+				obj.setNome(rs.getString(2));
+				obj.setDataNascimento(rs.getDate(3).toLocalDate());
+				obj.setCpf(rs.getString(4));
+				obj.setSenha(rs.getString(5));
+				
+				UnidadeSaude us = new UnidadeSaude(rs.getInt(6));
+				UnidadeSaudeBO usBO = new UnidadeSaudeBO();
+				us = usBO.procurarId(us);
+				
+				obj.setUnidadeSaude(us);
+				ps.close();
+				rs.close();
+				conn.close();
+				return obj;
+			} else {
+				ps.close();
+				rs.close();
+				conn.close();
+				return null;
+			}
+		} catch(Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+	
+	public Funcionario procurarIdSenha(Funcionario func) {
+		try {
+			Connection conn = Conexao.conectar();
 			String sql = "SELECT * FROM " + NOMEDATABELA + " WHERE NUMEROCNS_FUN = ? AND SENHA = ?;";
 			PreparedStatement ps = conn.prepareStatement(sql);
 			ps.setInt(1, func.getNumeroCNS());

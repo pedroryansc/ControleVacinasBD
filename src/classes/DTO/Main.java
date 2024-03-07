@@ -125,29 +125,27 @@ public class Main {
 								
 								if(resp == 1) {
 									
-									/*
+									RegistroVacina registro = new RegistroVacina(cidadao);
+									RegistroVacinaBO registroBO = new RegistroVacinaBO();
+									
+									List<RegistroVacina> registros = new ArrayList<RegistroVacina>();
+									registros = registroBO.procurarTodosPorId(registro);
 									
 									System.out.println("\nMinhas Vacinas:");
 									
-									for(int i = 0; i < registros.size(); i++) {
-										if(cidadaos.get(usuario).getNumeroCNS() == registros.get(i).getCidadao().getNumeroCNS()) {
+									if(!(registros.isEmpty())) {
+										for(int i = 0; i < registros.size(); i++) {
 											System.out.println("\nData: " + registros.get(i).getData().format(dataFormato));
 											System.out.println("Vacina: " + registros.get(i).getLote().getNomeVacina());
 											System.out.println("Lote: " + registros.get(i).getLote().getCodigo());
 											System.out.println("Laborat�rio: " + registros.get(i).getLote().getLaboratorio());
 											System.out.println("Vacinador(a): " + registros.get(i).getVacinador().getNome());
 											if(registros.get(i).getDose() != 0)
-												System.out.println("Dose: " + registros.get(i).getDose() + "�");
+												System.out.println("Dose: " + registros.get(i).getDose() + "a");
 											System.out.println("Unidade de Sa�de: " + registros.get(i).getUnidadeSaude().getNome() + " (" + registros.get(i).getUnidadeSaude().getCidade() + ")");
-											cont++;
 										}
-									}
-									if(cont == 0)
-										System.out.println("\nNenhum registro de vacina encontrado. \n");
-									
-									cont = 0;
-									
-									*/
+									} else
+										System.out.println("\nNenhum registro de vacina encontrado");
 								} else
 									condicao = false;
 							}
@@ -169,7 +167,7 @@ public class Main {
 								
 								func = new Funcionario(numeroCNS, senha);
 								FuncionarioBO funcBO = new FuncionarioBO();
-								func = funcBO.procurarId(func);
+								func = funcBO.procurarIdSenha(func);
 								
 								if(func != null)
 									condicao = false;
@@ -204,29 +202,29 @@ public class Main {
 								
 								if(resp == 1) {
 									
-									/*
-									
 									// Consulta de vacinas do funcion�rio
+									
+									RegistroVacina registro = new RegistroVacina(func);
+									RegistroVacinaBO registroBO = new RegistroVacinaBO();
+									
+									List<RegistroVacina> registros = new ArrayList<RegistroVacina>();
+									registros = registroBO.procurarTodosPorId(registro);
 									
 									System.out.println("\nMinhas Vacinas:");
 									
-									for(int i = 0; i < registros.size(); i++) {
-										if(funcs.get(usuario).getNumeroCNS() == registros.get(i).getCidadao().getNumeroCNS()) {
+									if(!(registros.isEmpty())) {
+										for(int i = 0; i < registros.size(); i++) {
 											System.out.println("\nData: " + registros.get(i).getData().format(dataFormato));
 											System.out.println("Vacina: " + registros.get(i).getLote().getNomeVacina());
 											System.out.println("Lote: " + registros.get(i).getLote().getCodigo());
 											System.out.println("Laborat�rio: " + registros.get(i).getLote().getLaboratorio());
 											System.out.println("Vacinador(a): " + registros.get(i).getVacinador().getNome());
 											if(registros.get(i).getDose() != 0)
-												System.out.println("Dose: " + registros.get(i).getDose() + "�");
+												System.out.println("Dose: " + registros.get(i).getDose() + "a");
 											System.out.println("Unidade de Sa�de: " + registros.get(i).getUnidadeSaude().getNome() + " (" + registros.get(i).getUnidadeSaude().getCidade() + ")");
-											cont++;
 										}
-									}
-									if(cont == 0)
-										System.out.println("\nNenhum registro de vacina encontrado.");
-									
-									cont = 0;
+									} else
+										System.out.println("\nNenhum registro de vacina encontrado");
 									
 									do {
 										System.out.println("\nO que voc� quer fazer?");
@@ -245,20 +243,27 @@ public class Main {
 									while(condicao1) {
 										System.out.println("\nInsira o n�mero da Carteira Nacional de Sa�de do cidad�o: ");
 										numeroCNS = entrada.nextInt();
-										for(int i = 0; i < cidadaos.size(); i++) {
-											if(cidadaos.get(i).getNumeroCNS() == numeroCNS) {
-												condicao1 = false;
-												cidad = i;
-											}
-										}
-										if(condicao1)
+										
+										cidadao = new Cidadao(numeroCNS);
+										CidadaoBO cidBO = new CidadaoBO();
+										cidadao = cidBO.procurarId(cidadao);
+										
+										if(cidadao != null)
+											condicao1 = false;
+										else
 											System.out.println("\nErro: N�mero de CNS inexistente. Por favor, insira novamente");
 									}
 									
-									System.out.println("\nCidad�(o): " + cidadaos.get(cidad).getNome());
+									System.out.println("\nCidadã(o): " + cidadao.getNome());
 									
-									for(int i = 0; i < registros.size(); i++) {
-										if(cidadaos.get(cidad).getNumeroCNS() == registros.get(i).getCidadao().getNumeroCNS()) {
+									RegistroVacina registro = new RegistroVacina(cidadao);
+									RegistroVacinaBO registroBO = new RegistroVacinaBO();
+									
+									List<RegistroVacina> registros = new ArrayList<RegistroVacina>();
+									registros = registroBO.procurarTodosPorId(registro);
+									
+									if(!(registros.isEmpty())) {
+										for(int i = 0; i < registros.size(); i++) {
 											System.out.println("\nData: " + registros.get(i).getData().format(dataFormato));
 											System.out.println("Vacina: " + registros.get(i).getLote().getNomeVacina());
 											System.out.println("Lote: " + registros.get(i).getLote().getCodigo());
@@ -267,10 +272,8 @@ public class Main {
 											if(registros.get(i).getDose() != 0)
 												System.out.println("Dose: " + registros.get(i).getDose() + "�");
 											System.out.println("Unidade de Sa�de: " + registros.get(i).getUnidadeSaude().getNome() + " (" + registros.get(i).getUnidadeSaude().getCidade() + ")");
-											cont++;
 										}
-									}
-									if(cont == 0)
+									} else
 										System.out.println("\nNenhum registro de vacina encontrado.");
 									
 									cont = 0;
@@ -285,8 +288,6 @@ public class Main {
 									
 									if(resp == 0)
 										condicao = false;
-										
-									*/
 								} else if(resp == 3) {
 									
 									Lote lote = new Lote(func.getUnidadeSaude());
@@ -295,14 +296,7 @@ public class Main {
 									List<Lote> lotes = new ArrayList<Lote>();
 									lotes = loteBO.procurarTodosPorIdUS(lote);
 									
-									/*
-									for(int i = 0; i < lotes.size(); i++) {
-										if(funcs.get(usuario).getUnidadeSaude().getTelefone() == lotes.get(i).getUnidadeSaude().getTelefone())
-											cont++;
-									}
-									*/
-									
-									if(lotes != null) {
+									if(!(lotes.isEmpty())) {
 										
 										// Cadastro de registro de vacina
 										
@@ -427,18 +421,24 @@ public class Main {
 										System.out.print("\nNenhum lote foi encontrado. Primeiro, cadastre um lote de vacina \n");
 								
 								} else if(resp == 4) {
-									/*
 									// Consulta de lotes
 									
-									System.out.println("\nLotes de Vacina de " + funcs.get(usuario).getUnidadeSaude().getNome());
+									Lote lote = new Lote(func.getUnidadeSaude());
+									LoteBO loteBO = new LoteBO();
 									
-									for(int i = 0; i < lotes.size(); i++) {
-										if(funcs.get(usuario).getUnidadeSaude().getTelefone() == lotes.get(i).getUnidadeSaude().getTelefone()) {
+									List<Lote> lotes = new ArrayList<Lote>();
+									lotes = loteBO.procurarTodosPorIdUS(lote);
+									
+									System.out.println("\nLotes de Vacina de " + func.getUnidadeSaude().getNome());
+									
+									if(!(lotes.isEmpty())) {
+										for(int i = 0; i < lotes.size(); i++) {
 											System.out.println("\nC�digo: " + lotes.get(i).getCodigo());
 											System.out.println("Vacina: " + lotes.get(i).getNomeVacina());
 											System.out.println("Laborat�rio: " + lotes.get(i).getLaboratorio());
 										}
-									}
+									} else
+										System.out.println("Nenhum lote encontrado.");
 									
 									do {
 										System.out.println("\nO que voc� quer fazer?");
@@ -450,7 +450,6 @@ public class Main {
 									
 									if(resp == 0)
 										condicao = false;
-								*/
 								} else if(resp == 5) {
 									
 									// Cadastro de lote
