@@ -1,16 +1,13 @@
 package classes.DTO;
+
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-import classes.BO.AdministradorBO;
-import classes.BO.CidadaoBO;
-import classes.BO.FuncionarioBO;
-import classes.BO.LoteBO;
-import classes.BO.RegistroVacinaBO;
-import classes.BO.UnidadeSaudeBO;
+import classes.BO.*;
+import classes.JSON.UnidadeSaudeJSON;
 
 public class Main {
 	public static void main(String[] args) {
@@ -22,25 +19,26 @@ public class Main {
 		Lote lote1 = new Lote("210200", "Contra Gripe", "Butantan", usItuporanga);
 		Lote lote2 = new Lote("FN9509", "Contra Covid-19", "Pfizer", usItuporanga);
 		
-		ArrayList<Lote> lotes = new ArrayList<Lote>();
-		lotes.add(lote1);
-		lotes.add(lote2);
-		
 		data = LocalDate.parse("2021-06-11");
-		RegistroVacina registro1 = new RegistroVacina(data, lotes.get(0), cidadaos.get(3), funcs.get(0), usItuporanga);
 		
 		data = LocalDate.parse("2022-07-27");
-		RegistroVacina registro2 = new RegistroVacina(data, lotes.get(1), cidadaos.get(3), funcs.get(1), 3, usItuporanga);
-		
-		ArrayList<RegistroVacina> registros = new ArrayList<RegistroVacina>();
-		registros.add(registro1);
-		registros.add(registro2);
 		
 		*/
 		
 		// Tela inicial
 		
 		DateTimeFormatter dataFormato = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+		
+		AdministradorBO adminBO = new AdministradorBO();
+		CidadaoBO cidBO = new CidadaoBO();
+		FuncionarioBO funcBO = new FuncionarioBO();
+		LoteBO loteBO = new LoteBO();
+		RegistroVacinaBO registroBO = new RegistroVacinaBO();
+		UnidadeSaudeBO usBO = new UnidadeSaudeBO();
+		
+		Cidadao cidadao = null;
+		Funcionario func = null;
+		Administrador admin = null;
 		
 		int opcao = 1;
 		int resp;
@@ -73,10 +71,6 @@ public class Main {
 					} while(resp < 0 || resp > 3);
 					
 					if(resp > 0) {
-					
-						Cidadao cidadao = null;
-						Funcionario func = null;
-						Administrador admin = null;
 						
 						int numeroCNS;
 						String senha;
@@ -94,7 +88,6 @@ public class Main {
 								numeroCNS = entrada.nextInt();
 								
 								cidadao = new Cidadao(numeroCNS);
-								CidadaoBO cidBO = new CidadaoBO();
 								cidadao = cidBO.procurarId(cidadao);
 								
 								if(cidadao != null)
@@ -126,7 +119,6 @@ public class Main {
 								if(resp == 1) {
 									
 									RegistroVacina registro = new RegistroVacina(cidadao);
-									RegistroVacinaBO registroBO = new RegistroVacinaBO();
 									
 									List<RegistroVacina> registros = new ArrayList<RegistroVacina>();
 									registros = registroBO.procurarTodosPorId(registro);
@@ -166,7 +158,6 @@ public class Main {
 								senha = entrada.nextLine();
 								
 								func = new Funcionario(numeroCNS, senha);
-								FuncionarioBO funcBO = new FuncionarioBO();
 								func = funcBO.procurarIdSenha(func);
 								
 								if(func != null)
@@ -205,7 +196,6 @@ public class Main {
 									// Consulta de vacinas do funcion�rio
 									
 									RegistroVacina registro = new RegistroVacina(func);
-									RegistroVacinaBO registroBO = new RegistroVacinaBO();
 									
 									List<RegistroVacina> registros = new ArrayList<RegistroVacina>();
 									registros = registroBO.procurarTodosPorId(registro);
@@ -245,7 +235,6 @@ public class Main {
 										numeroCNS = entrada.nextInt();
 										
 										cidadao = new Cidadao(numeroCNS);
-										CidadaoBO cidBO = new CidadaoBO();
 										cidadao = cidBO.procurarId(cidadao);
 										
 										if(cidadao != null)
@@ -257,7 +246,6 @@ public class Main {
 									System.out.println("\nCidadã(o): " + cidadao.getNome());
 									
 									RegistroVacina registro = new RegistroVacina(cidadao);
-									RegistroVacinaBO registroBO = new RegistroVacinaBO();
 									
 									List<RegistroVacina> registros = new ArrayList<RegistroVacina>();
 									registros = registroBO.procurarTodosPorId(registro);
@@ -270,7 +258,7 @@ public class Main {
 											System.out.println("Laborat�rio: " + registros.get(i).getLote().getLaboratorio());
 											System.out.println("Vacinador(a): " + registros.get(i).getVacinador().getNome());
 											if(registros.get(i).getDose() != 0)
-												System.out.println("Dose: " + registros.get(i).getDose() + "�");
+												System.out.println("Dose: " + registros.get(i).getDose() + "a");
 											System.out.println("Unidade de Sa�de: " + registros.get(i).getUnidadeSaude().getNome() + " (" + registros.get(i).getUnidadeSaude().getCidade() + ")");
 										}
 									} else
@@ -289,7 +277,6 @@ public class Main {
 								} else if(resp == 3) {
 									
 									Lote lote = new Lote(func.getUnidadeSaude());
-									LoteBO loteBO = new LoteBO();
 									
 									List<Lote> lotes = new ArrayList<Lote>();
 									lotes = loteBO.procurarTodosPorIdUS(lote);
@@ -358,7 +345,6 @@ public class Main {
 											numeroCNS = entrada.nextInt();
 											
 											cidadao = new Cidadao(numeroCNS);
-											CidadaoBO cidBO = new CidadaoBO();
 											cidadao = cidBO.procurarId(cidadao);
 											
 											if(cidadao == null)
@@ -395,7 +381,6 @@ public class Main {
 										
 										LocalDate data = LocalDate.parse(dataVetor[2] + "-" + dataVetor[1] + "-" + dataVetor[0]);
 										RegistroVacina registro = new RegistroVacina(0, data, lotes.get(loteCodigo), cidadao, vacinadores.get(vacinador), dose, func.getUnidadeSaude());
-										RegistroVacinaBO registroBO = new RegistroVacinaBO();
 										
 										if(registroBO.inserir(registro))
 											System.out.println("\nCadastro realizado com sucesso!");
@@ -420,7 +405,6 @@ public class Main {
 									// Consulta de lotes
 									
 									Lote lote = new Lote(func.getUnidadeSaude());
-									LoteBO loteBO = new LoteBO();
 									
 									List<Lote> lotes = new ArrayList<Lote>();
 									lotes = loteBO.procurarTodosPorIdUS(lote);
@@ -464,7 +448,6 @@ public class Main {
 									String laboratorio = entrada.nextLine();
 									
 									Lote lote = new Lote(codigo, vacina, laboratorio, func.getUnidadeSaude());
-									LoteBO loteBO = new LoteBO();
 									
 									if(loteBO.inserir(lote))
 										System.out.println("\nCadastro realizado com sucesso!");
@@ -501,7 +484,6 @@ public class Main {
 								senha = entrada.nextLine();
 								
 								admin = new Administrador(numeroCNS, senha);
-								AdministradorBO adminBO = new AdministradorBO();
 								admin = adminBO.procurarIdSenha(admin);
 								
 								if(admin != null)
@@ -534,7 +516,6 @@ public class Main {
 									
 									// Consulta de Unidades de Sa�de
 									
-									UnidadeSaudeBO usBO = new UnidadeSaudeBO();
 									List<UnidadeSaude> unidades = new ArrayList<UnidadeSaude>();
 									unidades = usBO.procurarTodas();
 									
@@ -584,7 +565,11 @@ public class Main {
 									String telefone = entrada.nextLine();
 									
 									UnidadeSaude us = new UnidadeSaude(0, nomeUnidade, rua, bairro, cidade, estado, telefone);
-									UnidadeSaudeBO usBO = new UnidadeSaudeBO();
+									
+									UnidadeSaudeJSON usLista = new UnidadeSaudeJSON();
+									usLista.adicionar(us);
+									
+									usLista.gravar();
 									
 									if(usBO.inserir(us))
 										System.out.println("\nCadastro realizado com sucesso!");
