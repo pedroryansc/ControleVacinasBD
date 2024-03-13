@@ -6,5 +6,6 @@
  */
 module ControleVacinasBD {
 	requires java.sql;
-	requires gson;
+	requires com.google.gson;
+	opens classes.DTO to com.google.gson;
 }

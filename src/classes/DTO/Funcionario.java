@@ -45,10 +45,10 @@ public class Funcionario extends Cidadao {
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
-		builder.append("Funcionario [unidadeSaude=");
+		builder.append("Funcionario [senha=");
+		builder.append(senha);
+		builder.append(", unidadeSaude=");
 		builder.append(unidadeSaude);
-		builder.append(", toString()=");
-		builder.append(super.toString());
 		builder.append("]");
 		return builder.toString();
 	}
