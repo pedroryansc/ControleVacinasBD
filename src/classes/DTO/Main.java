@@ -282,7 +282,11 @@ public class Main {
 											numeroCNS = entrada.nextInt();
 											
 											cidadao = new Cidadao(numeroCNS);
-											cidadao = cidBO.procurarId(cidadao);
+											
+											if(pers == 1)
+												cidadao = cidBO.procurarId(cidadao);
+											else if(pers == 2)
+												cidadao = cidJSON.procurarId(cidadao);
 											
 											if(cidadao != null)
 												condicao1 = false;
@@ -295,7 +299,11 @@ public class Main {
 										RegistroVacina registro = new RegistroVacina(cidadao);
 										
 										List<RegistroVacina> registros = new ArrayList<RegistroVacina>();
-										registros = registroBO.procurarTodosPorId(registro);
+										
+										if(pers == 1)
+											registros = registroBO.procurarTodosPorId(registro);
+										else if(pers == 2)
+											registros = registroJSON.procurarTodosPorId(registro);
 										
 										if(!(registros.isEmpty())) {
 											for(int i = 0; i < registros.size(); i++) {
