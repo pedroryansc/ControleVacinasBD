@@ -3,6 +3,8 @@ package classes.DAO;
 import classes.DTO.Funcionario;
 import classes.DTO.UnidadeSaude;
 import classes.BO.UnidadeSaudeBO;
+import interfaces.IFuncionario;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -11,7 +13,7 @@ import java.util.List;
 
 import conf.Conexao;
 
-public class FuncionarioDAO {
+public class FuncionarioDAO implements IFuncionario {
 
 	final String NOMEDATABELA = "FUNCIONARIO";
 	

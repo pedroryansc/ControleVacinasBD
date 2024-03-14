@@ -3,15 +3,16 @@ package classes.DAO;
 import classes.BO.UnidadeSaudeBO;
 import classes.DTO.Lote;
 import classes.DTO.UnidadeSaude;
-import conf.Conexao;
+import interfaces.ILote;
 
+import conf.Conexao;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
-public class LoteDAO {
+public class LoteDAO implements ILote {
 
 	final String NOMEDATABELA = "LOTE";
 	

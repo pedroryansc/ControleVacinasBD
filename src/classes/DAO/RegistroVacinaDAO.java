@@ -10,6 +10,8 @@ import classes.DTO.Lote;
 import classes.DTO.RegistroVacina;
 import classes.DTO.UnidadeSaude;
 
+import interfaces.IRegistroVacina;
+
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
@@ -19,7 +21,7 @@ import java.util.List;
 
 import conf.Conexao;
 
-public class RegistroVacinaDAO {
+public class RegistroVacinaDAO implements IRegistroVacina {
 
 	final String NOMEDATABELA = "REGISTROVACINA";
 	

@@ -13,8 +13,9 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 
 import classes.DTO.Funcionario;
+import interfaces.IFuncionario;
 
-public class FuncionarioJSON {
+public class FuncionarioJSON implements IFuncionario {
 
 private List<Funcionario> lista = new ArrayList<Funcionario>();
 	

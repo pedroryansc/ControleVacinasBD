@@ -10,12 +10,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 import classes.DTO.UnidadeSaude;
+import interfaces.IUnidadeSaude;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 
-public class UnidadeSaudeJSON {
+public class UnidadeSaudeJSON implements IUnidadeSaude {
 
 	private List<UnidadeSaude> lista = new ArrayList<UnidadeSaude>();
 	
@@ -34,7 +35,9 @@ public class UnidadeSaudeJSON {
 		lista.add(us);
 	}
 	
-	public boolean gravar() {
+	public boolean inserir(UnidadeSaude us) {
+		setLista(procurarTodas());
+		adicionar(us);
 		GsonBuilder builder = new GsonBuilder();
 		Gson gson = builder.create();
 		FileWriter file;
@@ -49,7 +52,7 @@ public class UnidadeSaudeJSON {
 		return false;
 	}
 	
-	public List<UnidadeSaude> ler() {
+	public List<UnidadeSaude> procurarTodas() {
 	    BufferedReader bufferedReader = null;
 		try {
 			bufferedReader = new BufferedReader(new FileReader(CAMINHO));

@@ -9,12 +9,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 import classes.DTO.Administrador;
+import interfaces.IAdministrador;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 
-public class AdministradorJSON {
+public class AdministradorJSON implements IAdministrador {
 
 	private List<Administrador> lista = new ArrayList<Administrador>();
 	

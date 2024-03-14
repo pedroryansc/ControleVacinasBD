@@ -6,8 +6,9 @@ import java.sql.ResultSet;
 import conf.Conexao;
 
 import classes.DTO.Administrador;
+import interfaces.IAdministrador;
 
-public class AdministradorDAO {
+public class AdministradorDAO implements IAdministrador {
 
 	final String NOMEDATABELA = "ADMINISTRADOR";
 	

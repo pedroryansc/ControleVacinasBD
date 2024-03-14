@@ -13,8 +13,9 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 
 import classes.DTO.Cidadao;
+import interfaces.ICidadao;
 
-public class CidadaoJSON {
+public class CidadaoJSON implements ICidadao {
 
 	private List<Cidadao> lista = new ArrayList<Cidadao>();
 	

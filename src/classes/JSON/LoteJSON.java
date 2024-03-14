@@ -15,8 +15,9 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 
 import classes.DTO.Lote;
+import interfaces.ILote;
 
-public class LoteJSON {
+public class LoteJSON implements ILote {
 
 	private List<Lote> lista = new ArrayList<Lote>();
 	
@@ -34,7 +35,11 @@ public class LoteJSON {
 		lista.add(lote);
 	}
 	
-	public boolean gravar() {
+	public boolean inserir(Lote lote) {
+		File arquivo = new File(CAMINHO);
+		if(arquivo.exists())
+			setLista(ler());
+		adicionar(lote);
 		GsonBuilder builder = new GsonBuilder();
 		Gson gson = builder.create();
 		FileWriter file;
@@ -52,9 +57,8 @@ public class LoteJSON {
 	public List<Lote> ler() {
 	    BufferedReader bufferedReader = null;
 	    File file = new File(CAMINHO);
-	    if(!(file.exists())) {
-	    	gravar();
-	    }	
+	    if(!(file.exists()))
+	    	inserir(null);
 		try {
 			bufferedReader = new BufferedReader(new FileReader(CAMINHO));
 		} catch (FileNotFoundException e) {

@@ -6,8 +6,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-import classes.BO.*;
-import classes.JSON.*;
+import classes.BO.BO;
+import transfer.*;
 
 public class Main {
 	public static void main(String[] args) {
@@ -29,19 +29,7 @@ public class Main {
 		
 		DateTimeFormatter dataFormato = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 		
-		AdministradorBO adminBO = new AdministradorBO();
-		CidadaoBO cidBO = new CidadaoBO();
-		FuncionarioBO funcBO = new FuncionarioBO();
-		LoteBO loteBO = new LoteBO();
-		RegistroVacinaBO registroBO = new RegistroVacinaBO();
-		UnidadeSaudeBO usBO = new UnidadeSaudeBO();
-		
-		AdministradorJSON adminJSON = new AdministradorJSON();
-		CidadaoJSON cidJSON = new CidadaoJSON();
-		FuncionarioJSON funcJSON = new FuncionarioJSON();
-		LoteJSON loteJSON = new LoteJSON();
-		RegistroVacinaJSON registroJSON = new RegistroVacinaJSON();
-		UnidadeSaudeJSON usJSON = new UnidadeSaudeJSON();
+		BO bo = new BO();
 		
 		Cidadao cidadao = null;
 		Funcionario func = null;
@@ -72,13 +60,16 @@ public class Main {
 				while(opcao != 0) {
 					
 					System.out.print("\nTipo de persistência: ");
-					if(pers == 1)
+					if(pers == 1) {
 						System.out.println("Banco de Dados (MySQL) \n");
-					else if(pers == 2)
+						bo.setPersistencia(new SQL());
+					} else if(pers == 2) {
 						System.out.println("JSON \n");
-					else
+						bo.setPersistencia(new JSON());
+					} else {
 						System.out.println("XML \n");
-					
+					}
+						
 					do {
 						System.out.println("O que voc� quer fazer?");
 						System.out.println("(1) Login \n(0) Voltar");
@@ -120,10 +111,7 @@ public class Main {
 									
 									cidadao = new Cidadao(numeroCNS);
 									
-									if(pers == 1)
-										cidadao = cidBO.procurarId(cidadao);
-									else if(pers == 2)
-										cidadao = cidJSON.procurarId(cidadao);
+									cidadao = bo.persistencia.getCidadao().procurarId(cidadao);
 									
 									if(cidadao != null)
 										condicao = false;
@@ -157,10 +145,7 @@ public class Main {
 										
 										List<RegistroVacina> registros = new ArrayList<RegistroVacina>();
 										
-										if(pers == 1)
-											registros = registroBO.procurarTodosPorId(registro);
-										else if(pers == 2)
-											registros = registroJSON.procurarTodosPorId(registro);
+										registros = bo.persistencia.getRegistroVacina().procurarTodosPorId(registro);
 										
 										System.out.println("\nMinhas Vacinas:");
 										
@@ -198,10 +183,7 @@ public class Main {
 									
 									func = new Funcionario(numeroCNS, senha);
 									
-									if(pers == 1)
-										func = funcBO.procurarIdSenha(func);
-									else if(pers == 2)
-										func = funcJSON.procurarIdSenha(func);
+									func = bo.persistencia.getFuncionario().procurarIdSenha(func);
 									
 									if(func != null)
 										condicao = false;
@@ -242,10 +224,7 @@ public class Main {
 										
 										List<RegistroVacina> registros = new ArrayList<RegistroVacina>();
 										
-										if(pers == 1)
-											registros = registroBO.procurarTodosPorId(registro);
-										else if(pers == 2)
-											registros = registroJSON.procurarTodosPorId(registro);
+										registros = bo.persistencia.getRegistroVacina().procurarTodosPorId(registro);
 										
 										System.out.println("\nMinhas Vacinas:");
 										
@@ -283,10 +262,7 @@ public class Main {
 											
 											cidadao = new Cidadao(numeroCNS);
 											
-											if(pers == 1)
-												cidadao = cidBO.procurarId(cidadao);
-											else if(pers == 2)
-												cidadao = cidJSON.procurarId(cidadao);
+											cidadao = bo.persistencia.getCidadao().procurarId(cidadao);
 											
 											if(cidadao != null)
 												condicao1 = false;
@@ -300,10 +276,7 @@ public class Main {
 										
 										List<RegistroVacina> registros = new ArrayList<RegistroVacina>();
 										
-										if(pers == 1)
-											registros = registroBO.procurarTodosPorId(registro);
-										else if(pers == 2)
-											registros = registroJSON.procurarTodosPorId(registro);
+										registros = bo.persistencia.getRegistroVacina().procurarTodosPorId(registro);
 										
 										if(!(registros.isEmpty())) {
 											for(int i = 0; i < registros.size(); i++) {
@@ -335,10 +308,7 @@ public class Main {
 										
 										List<Lote> lotes = new ArrayList<Lote>();
 										
-										if(pers == 1)
-											lotes = loteBO.procurarTodosPorIdUS(lote);
-										else if(pers == 2)
-											lotes = loteJSON.procurarTodosPorIdUS(lote);
+										lotes = bo.persistencia.getLote().procurarTodosPorIdUS(lote);
 										
 										if(!(lotes.isEmpty())) {
 											
@@ -405,10 +375,7 @@ public class Main {
 												
 												cidadao = new Cidadao(numeroCNS);
 												
-												if(pers == 1)
-													cidadao = cidBO.procurarId(cidadao);
-												else if(pers == 2)
-													cidadao = cidJSON.procurarId(cidadao);
+												cidadao = bo.persistencia.getCidadao().procurarId(cidadao);
 												
 												if(cidadao == null)
 													System.out.println("\nErro: N�mero de CNS inexistente. Por favor, insira novamente");
@@ -418,10 +385,7 @@ public class Main {
 											
 											List<Funcionario> vacinadores = new ArrayList<Funcionario>();
 											
-											if(pers == 1)
-												vacinadores = funcBO.procurarTodosPorIdUS(vac);
-											else if(pers == 2)
-												vacinadores = funcJSON.procurarTodosPorIdUS(vac);
+											vacinadores = bo.persistencia.getFuncionario().procurarTodosPorIdUS(vac);
 											
 											int vacinador;
 											
@@ -448,14 +412,7 @@ public class Main {
 											LocalDate data = LocalDate.parse(dataVetor[2] + "-" + dataVetor[1] + "-" + dataVetor[0]);
 											RegistroVacina registro = new RegistroVacina(0, data, lotes.get(loteCodigo), cidadao, vacinadores.get(vacinador), dose, func.getUnidadeSaude());
 											
-											if(pers == 1)
-												resultado = registroBO.inserir(registro);
-											else if(pers == 2) {
-												registroJSON.setLista(registroJSON.ler());
-												registroJSON.adicionar(registro);
-												resultado = registroJSON.gravar();
-											}
-												
+											resultado = bo.persistencia.getRegistroVacina().inserir(registro);
 											
 											if(resultado)
 												System.out.println("\nCadastro realizado com sucesso!");
@@ -484,10 +441,7 @@ public class Main {
 										
 										List<Lote> lotes = new ArrayList<Lote>();
 										
-										if(pers == 1)
-											lotes = loteBO.procurarTodosPorIdUS(lote);
-										else if(pers == 2)
-											lotes = loteJSON.procurarTodosPorIdUS(lote);
+										lotes = bo.persistencia.getLote().procurarTodosPorIdUS(lote);
 										
 										System.out.println("\nLotes de Vacina de " + func.getUnidadeSaude().getNome());
 										
@@ -529,13 +483,7 @@ public class Main {
 										
 										Lote lote = new Lote(codigo, vacina, laboratorio, func.getUnidadeSaude());
 										
-										if(pers == 1)
-											resultado = loteBO.inserir(lote);
-										else if(pers == 2) {
-											loteJSON.setLista(loteJSON.ler());
-											loteJSON.adicionar(lote);
-											resultado = loteJSON.gravar();
-										}
+										resultado = bo.persistencia.getLote().inserir(lote);
 										
 										if(resultado)
 											System.out.println("\nCadastro realizado com sucesso!");
@@ -573,10 +521,7 @@ public class Main {
 									
 									admin = new Administrador(numeroCNS, senha);
 									
-									if(pers == 1)
-										admin = adminBO.procurarIdSenha(admin);
-									else if(pers == 2)
-										admin = adminJSON.procurarIdSenha(admin);
+									admin = bo.persistencia.getAdministrador().procurarIdSenha(admin);
 									
 									if(admin != null)
 										condicao = false;
@@ -610,10 +555,7 @@ public class Main {
 										
 										List<UnidadeSaude> unidades = new ArrayList<UnidadeSaude>();
 										
-										if(pers == 1)
-											unidades = usBO.procurarTodas();
-										else if(pers == 2)
-											unidades = usJSON.ler();
+										unidades = bo.persistencia.getUnidadeSaude().procurarTodas();
 										
 										System.out.println("\nUnidades de Sa�de");
 										
@@ -662,13 +604,7 @@ public class Main {
 										
 										UnidadeSaude us = new UnidadeSaude(0, nomeUnidade, rua, bairro, cidade, estado, telefone);
 										
-										if(pers == 1) {
-											resultado = usBO.inserir(us);
-										} else if(pers == 2) {
-											usJSON.setLista(usJSON.ler());
-											usJSON.adicionar(us);
-											resultado = usJSON.gravar();
-										}
+										resultado = bo.persistencia.getUnidadeSaude().inserir(us);
 										
 										if(resultado)
 											System.out.println("\nCadastro realizado com sucesso!");

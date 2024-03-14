@@ -1,12 +1,14 @@
 package classes.DAO;
 
 import classes.DTO.Cidadao;
+import interfaces.ICidadao;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import conf.Conexao;
 
-public class CidadaoDAO {
+public class CidadaoDAO implements ICidadao {
 
 	final String NOMEDATABELA = "CIDADAO";
 	

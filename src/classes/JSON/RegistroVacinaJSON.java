@@ -16,8 +16,9 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 
 import classes.DTO.RegistroVacina;
+import interfaces.IRegistroVacina;
 
-public class RegistroVacinaJSON {
+public class RegistroVacinaJSON implements IRegistroVacina {
 
 	private List<RegistroVacina> lista = new ArrayList<RegistroVacina>();
 	
@@ -36,7 +37,11 @@ public class RegistroVacinaJSON {
 		lista.add(registro);
 	}
 	
-	public boolean gravar() {
+	public boolean inserir(RegistroVacina registro) {
+		File arquivo = new File(CAMINHO);
+		if(arquivo.exists())
+			setLista(ler());
+		adicionar(registro);
 		GsonBuilder builder = new GsonBuilder();
 		Gson gson = builder.registerTypeAdapter(LocalDate.class, new LocalDateTypeAdapter()).create();
 		FileWriter file;
@@ -55,7 +60,7 @@ public class RegistroVacinaJSON {
 	    BufferedReader bufferedReader = null;
 	    File file = new File(CAMINHO);
 	    if(!(file.exists())) {
-	    	gravar();
+	    	inserir(null);
 	    }
 		try {
 			bufferedReader = new BufferedReader(new FileReader(CAMINHO));

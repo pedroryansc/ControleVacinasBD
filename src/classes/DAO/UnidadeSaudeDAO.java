@@ -1,6 +1,8 @@
 package classes.DAO;
 
 import classes.DTO.UnidadeSaude;
+import interfaces.IUnidadeSaude;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -9,7 +11,7 @@ import java.util.List;
 
 import conf.Conexao;
 
-public class UnidadeSaudeDAO {
+public class UnidadeSaudeDAO implements IUnidadeSaude {
 
 final String NOMEDATABELA = "UNIDADESAUDE";
 	
