@@ -121,4 +121,12 @@ public class UnidadeSaudeXML implements IUnidadeSaude {
 		return lista;
 	}
 	
+	public UnidadeSaude procurarId(UnidadeSaude us) {
+		setLista(procurarTodas());
+		for(int i = 0; i < lista.size(); i++) {
+			if(lista.get(i).getId() == us.getId())
+				return lista.get(i);
+		}
+		return null;
+	}
 }

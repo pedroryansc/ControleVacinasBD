@@ -38,6 +38,8 @@ public class AdministradorXML implements IAdministrador {
 		Element config = doc.getRootElement();
 		List listaAdmin = config.getChildren("administrador");
 		
+		lista = new ArrayList<Administrador>();
+		
 		DateTimeFormatter dataFormato = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 		
 		for(Iterator iter = listaAdmin.iterator(); iter.hasNext();) {
