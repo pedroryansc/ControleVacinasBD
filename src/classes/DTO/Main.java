@@ -68,6 +68,7 @@ public class Main {
 						bo.setPersistencia(new JSON());
 					} else {
 						System.out.println("XML \n");
+						bo.setPersistencia(new XML());
 					}
 						
 					do {

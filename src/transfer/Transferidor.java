@@ -10,6 +10,7 @@ public abstract class Transferidor {
 	protected ILote lote;
 	protected IRegistroVacina registroVacina;
 	protected IUnidadeSaude unidadeSaude;
+	
 	public IAdministrador getAdministrador() {
 		return administrador;
 	}

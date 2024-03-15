@@ -1,0 +1,2 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<funcionarios><titulo>Funcionários</titulo><funcionario numeroCNS="19770525"><nome>Rodrigo Curvêllo</nome><dataNascimento>1978-04-24</dataNascimento><cpf>400.289.220-00</cpf><senha>1234</senha></funcionario><funcionario numeroCNS="2023220224"><nome>Pedro Henrique Damann</nome><dataNascimento>2005-01-14</dataNascimento><cpf>109.876.543-21</cpf><senha>rd2</senha></funcionario></funcionarios>
