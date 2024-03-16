@@ -119,7 +119,7 @@ public class RegistroVacinaXML implements IRegistroVacina {
 			registro.setId(Integer.parseInt(element.getAttributeValue("id")));
 			registro.setData(LocalDate.parse(element.getChildText("data"), dataFormato));
 			
-			Lote lote = new Lote(element.getChildText("lote"))
+			Lote lote = new Lote(element.getChildText("lote"));
 			LoteXML loteXML = new LoteXML();
 			lote = loteXML.procurarCodigo(lote);
 			

@@ -1,2 +1,2 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<registros><titulo>Registros de Vacina</titulo><registro id="1"><data>2024-03-09</data><lote>FN9509</lote><cidadao>2023220224</cidadao><vacinador>19770525</vacinador><dose>4</dose><unidadeSaude>1</unidadeSaude></registro></registros>
+<registros><titulo>Registros de Vacina</titulo><registro id="1"><data>2024-03-09</data><lote>FN9509</lote><cidadao>2023220224</cidadao><vacinador>19770525</vacinador><dose>4</dose><unidadeSaude>1</unidadeSaude></registro><registro id="2"><data>2021-09-19</data><lote>FN9509</lote><cidadao>19770525</cidadao><vacinador>19770525</vacinador><dose>3</dose><unidadeSaude>1</unidadeSaude></registro></registros>

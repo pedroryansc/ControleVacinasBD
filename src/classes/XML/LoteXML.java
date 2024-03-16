@@ -157,7 +157,7 @@ public class LoteXML implements ILote {
 	public Lote procurarCodigo(Lote lote) {
 		setLista(ler());
 		for(int i = 0; i < lista.size(); i++) {
-			if(lista.get(i).getCodigo() == lote.getCodigo())
+			if(lista.get(i).getCodigo().equals(lote.getCodigo()))
 				return lista.get(i);
 		}
 		return null;
